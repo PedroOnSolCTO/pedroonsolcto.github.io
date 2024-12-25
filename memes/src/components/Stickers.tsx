@@ -4,7 +4,7 @@ import './Stickers.css';
 export const Stickers: FC = () => {
   return (
     <div className="stickers">
-      <h2>Stickers</h2>
+      <h2 className="control-heading">Stickers</h2>
       <div className="sticker-list" id="quick-stickers">
         <button>🐵</button>
         <button>🙈</button>

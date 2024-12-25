@@ -9,9 +9,13 @@ export const PhotoFilters: FC = () => {
         <select id="filter-select">
           <option value="none">None</option>
           <option value="grayscale">Grayscale</option>
-          <option value="sepia">Sepia</option>
-          <option value="invert">Invert</option>
           <option value="blur">Blur</option>
+          <option value="sepia">Sepia</option>
+          <option value="dreamy">Dreamy</option>
+          <option value="cartoon">Cartoon</option>
+          <option value="crunchy">Crunchy</option>
+          <option value="invert">Invert</option>
+          <option value="hue-rotate">Hue-Rotate</option>
         </select>
       </div>
     </>

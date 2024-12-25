@@ -207,11 +207,6 @@
 }
 
 @media screen and (max-width: 600px) {
-  body {
-    overflow: hidden;
-    height: 100vh;
-  }
-
   .preview-area {
     height: calc(50vh - 19px);
     width: 100%;
@@ -227,6 +222,8 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
   }
 }
 
@@ -237,12 +234,4 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23ff7043' stroke='white' stroke-width='2'%3E%3Cpath d='M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z'/%3E%3C/svg%3E")
       0 24,
     auto !important;
-}
-
-@media screen and (max-width: 600px) {
-  canvas {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-  }
 }
