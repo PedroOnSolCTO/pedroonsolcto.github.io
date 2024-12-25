@@ -1,7 +1,8 @@
-import { MemeGenerator } from './components/MemeGenerator.jsx';
+import { FC } from 'react';
+import { MemeGenerator } from './components/MemeGenerator';
 import './App.css';
 
-function App() {
+const App: FC = () => {
   return (
     <>
       <header>
