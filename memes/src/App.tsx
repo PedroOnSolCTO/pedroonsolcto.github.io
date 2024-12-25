@@ -1,17 +1,22 @@
 import { FC } from 'react';
-import { MemeGenerator } from './components/MemeGenerator';
+import { Controls } from './components/Controls';
+// import { Frames } from './components/Frames';
+import { Header } from './components/Header';
+import { Preview } from './components/Preview';
 import './App.css';
 
 const App: FC = () => {
   return (
     <>
-      <header>
-        <h1>Meme Generator</h1>
-      </header>
+      <Header />
 
-      <MemeGenerator />
+      <div className="wrapper">
+        {/* <Frames /> */}
+        <Preview />
+        <Controls />
+      </div>
     </>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,41 @@
+.drawing-indicator {
+  display: none;
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  background: #ff7043;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.drawing-indicator::before {
+  content: '✏️';
+  font-size: 20px;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 112, 67, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 112, 67, 0);
+  }
+}
+
+.drawing-mode .drawing-indicator {
+  display: flex;
+  opacity: 1;
+}

@@ -1,0 +1,26 @@
+.trash-can {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute !important;
+  bottom: 1em;
+  right: 1em;
+}
+
+.trash-can:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.1);
+}
+
+.trash-can.drag-over {
+  background: rgba(255, 99, 71, 0.2);
+  transform: scale(1.2);
+}
