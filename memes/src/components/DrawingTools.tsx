@@ -1,28 +1,41 @@
 import { FC } from 'react';
+import { useDrawing } from '../hooks/useDrawing';
+import './DrawingTools.css';
 
 export const DrawingTools: FC = () => {
+  const { drawingState, setDrawingState, clearDrawing } = useDrawing();
+
   return (
     <div>
       <h2 className="control-heading">Drawing Tools</h2>
-      <div className="drawing-controls">
+      <div className="control-group">
         <label className="switch">
-          <input type="checkbox" id="draw-mode-toggle" aria-label="Toggle Drawing Mode" />
+          <input
+            type="checkbox"
+            checked={drawingState.isDrawMode}
+            onChange={(e) => setDrawingState({ isDrawMode: e.target.checked })}
+          />
           <span className="slider"></span>
         </label>
         <span>Drawing Mode</span>
       </div>
       <div className="control-group">
-        <label>Draw Color</label>
-        <input type="color" id="draw-color" value="#00cc00" aria-label="Draw Color" />
-      </div>
-      <div className="control-group">
-        <label>Draw Size</label>
-        <input type="range" id="draw-size" min="1" max="50" value="10" step="1" />
-      </div>
-      <div className="actions">
-        <button id="clear-draw" className="action-button action-button--compact">
-          <span className="material-symbols-outlined">delete</span>
-          Clear Doodles
+        <input
+          type="color"
+          value={drawingState.color}
+          onChange={(e) => setDrawingState({ color: e.target.value })}
+          title="Drawing Color"
+        />
+        <input
+          type="range"
+          value={drawingState.size}
+          onChange={(e) => setDrawingState({ size: Number(e.target.value) })}
+          min="1"
+          max="50"
+          title="Drawing Size"
+        />
+        <button onClick={clearDrawing} className="clear-draw-btn">
+          Clear Drawing
         </button>
       </div>
     </div>

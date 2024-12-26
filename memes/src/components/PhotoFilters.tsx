@@ -1,23 +1,39 @@
 import { FC } from 'react';
 
-export const PhotoFilters: FC = () => {
+interface PhotoFiltersProps {
+  currentFilter: string;
+  onFilterChange: (filter: string) => void;
+}
+
+export const PhotoFilters: FC<PhotoFiltersProps> = ({ currentFilter, onFilterChange }) => {
+  const filters = [
+    { value: 'none', label: 'None' },
+    { value: 'grayscale', label: 'Grayscale' },
+    { value: 'sepia', label: 'Sepia' },
+    { value: 'invert', label: 'Invert' },
+    { value: 'dreamy', label: 'Dreamy' },
+    { value: 'cartoon', label: 'Cartoon' },
+    { value: 'crunchy', label: 'Crunchy' },
+    { value: 'hue-rotate', label: 'Hue Rotate' },
+    { value: 'blur', label: 'Blur' },
+  ];
+
   return (
-    <>
-      <h2 className="control-heading">Filters</h2>
+    <div>
+      <h2 className="control-heading">Photo Filter</h2>
       <div className="control-group">
-        <label>Select Filter</label>
-        <select id="filter-select">
-          <option value="none">None</option>
-          <option value="grayscale">Grayscale</option>
-          <option value="blur">Blur</option>
-          <option value="sepia">Sepia</option>
-          <option value="dreamy">Dreamy</option>
-          <option value="cartoon">Cartoon</option>
-          <option value="crunchy">Crunchy</option>
-          <option value="invert">Invert</option>
-          <option value="hue-rotate">Hue-Rotate</option>
+        <select
+          value={currentFilter}
+          onChange={(e) => onFilterChange(e.target.value)}
+          aria-label="Select Filter"
+        >
+          {filters.map(filter => (
+            <option key={filter.value} value={filter.value}>
+              {filter.label}
+            </option>
+          ))}
         </select>
       </div>
-    </>
+    </div>
   );
 };

@@ -28,80 +28,6 @@
   margin-top: 1em;
 }
 
-.control-group {
-  margin-bottom: 0.6em;
-}
-
-.control-group label {
-  display: block;
-  margin-bottom: 0.2em;
-  font-weight: 500;
-  font-size: 0.85em;
-  color: #4e342e;
-  letter-spacing: 0.02em;
-}
-
-.control-group input[type='text'],
-.control-group input[type='color'],
-.control-group input[type='number'],
-.control-group select {
-  width: 100%;
-  padding: 0.3em;
-  font-size: 0.9em;
-  border: 1px solid #bcaaa4;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: 'Kanit', sans-serif;
-  font-weight: 300;
-  transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.control-group input:focus,
-.control-group select:focus {
-  outline: none;
-  border-color: #ff7043;
-  box-shadow: 0 0 0 2px rgba(255, 112, 67, 0.1);
-}
-
-.control-group input[type='color'] {
-  height: 28px;
-  padding: 1px;
-}
-
-.control-group input[type='range'] {
-  width: 100%;
-  margin: 0.2em 0;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  border-radius: 3px;
-  background: #bcaaa4;
-  outline: none;
-}
-
-.control-group input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ff7043;
-  cursor: pointer;
-  border: 2px solid white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.control-group input[type='range']::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ff7043;
-  cursor: pointer;
-  border: 2px solid white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
 @media screen and (max-width: 600px) {
   .controls-area {
     height: calc(50vh - 19px);
@@ -111,13 +37,5 @@
 
   .controls-area-content {
     height: 100%;
-  }
-
-  .control-group {
-    margin-bottom: 0.75em;
-  }
-
-  .control-group label {
-    font-size: 0.9em;
   }
 }

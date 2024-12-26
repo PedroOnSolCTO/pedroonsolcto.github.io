@@ -1,34 +1,42 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { useStickers } from '../hooks/useStickers';
 import './Stickers.css';
 
 export const Stickers: FC = () => {
+  const { addSticker } = useStickers();
+  const [stickerInput, setStickerInput] = useState('');
+
+  const quickStickers = ['😂', '🔥', '💯', '👀', '🤔', '💪', '🎉', '❤️'];
+
+  const handleAddSticker = () => {
+    if (stickerInput.trim()) {
+      addSticker(stickerInput.trim());
+      setStickerInput('');
+    }
+  };
+
   return (
-    <div className="stickers">
+    <div>
       <h2 className="control-heading">Stickers</h2>
-      <div className="sticker-list" id="quick-stickers">
-        <button>🐵</button>
-        <button>🙈</button>
-        <button>🙉</button>
-        <button>🐒</button>
-        <button>🍌</button>
-        <button>💰</button>
-        <button>💵</button>
-        <button>🤑</button>
-        <button>🦧</button>
-        <button>💎</button>
-        <button>🌕</button>
-        <button>🚀</button>
-        <button>📈</button>
-      </div>
       <div className="control-group">
-        <label htmlFor="sticker-input">Add Emoji Sticker</label>
-        <input type="text" id="sticker-input" placeholder="e.g. 🐵" />
+        <input
+          type="text"
+          value={stickerInput}
+          onChange={(e) => setStickerInput(e.target.value)}
+          placeholder="Enter emoji or sticker"
+        />
+        <button onClick={handleAddSticker}>Add Sticker</button>
       </div>
-      <div className="actions">
-        <button id="add-sticker-btn" className="action-button action-button--compact">
-          <span className="material-symbols-outlined">add_reaction</span>
-          Add Sticker
-        </button>
+      <div className="quick-stickers">
+        {quickStickers.map((sticker) => (
+          <button
+            key={sticker}
+            onClick={() => addSticker(sticker)}
+            className="quick-sticker-btn"
+          >
+            {sticker}
+          </button>
+        ))}
       </div>
     </div>
   );
