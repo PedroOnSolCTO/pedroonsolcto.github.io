@@ -16,6 +16,7 @@
   padding: 12px;
   background: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
+  flex-shrink: 0;
 }
 
 .tab-button {
@@ -51,17 +52,29 @@
 }
 
 .controls-area-content {
-  box-sizing: border-box;
-  padding: 16px;
+  position: relative;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  height: 100%;
+}
+
+.controls-area-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.controls-area-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.controls-area-content::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 2px;
 }
 
 @media screen and (max-width: 600px) {
   .controls-area {
-    height: calc(50vh - 19px);
+    height: 50vh;
     width: 100%;
-    overflow-y: auto;
   }
 
   .controls-tabs {

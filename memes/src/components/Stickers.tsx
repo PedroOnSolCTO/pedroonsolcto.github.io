@@ -2,41 +2,77 @@ import { FC, useState } from 'react';
 import { useStickers } from '../hooks/useStickers';
 import './Stickers.css';
 
+const STICKER_CATEGORIES = [
+  {
+    name: 'Recent',
+    stickers: ['😂', '🔥', '💯', '👀', '🤔', '💪', '🎉', '❤️'],
+  },
+  {
+    name: 'Smileys',
+    stickers: ['😀', '😃', '😄', '😁', '😅', '😂', '🤣', '😊', '😇', '🙂', '😉', '😍'],
+  },
+  {
+    name: 'Animals',
+    stickers: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮'],
+  },
+  {
+    name: 'Food',
+    stickers: ['🍏', '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍈', '🍒', '🍑'],
+  },
+];
+
 export const Stickers: FC = () => {
   const { addSticker } = useStickers();
-  const [stickerInput, setStickerInput] = useState('');
+  const [activeCategory, setActiveCategory] = useState('Recent');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const quickStickers = ['😂', '🔥', '💯', '👀', '🤔', '💪', '🎉', '❤️'];
-
-  const handleAddSticker = () => {
-    if (stickerInput.trim()) {
-      addSticker(stickerInput.trim());
-      setStickerInput('');
-    }
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    // If implementing search, you would filter stickers here
   };
 
+  const currentStickers =
+    STICKER_CATEGORIES.find(cat => cat.name === activeCategory)?.stickers || [];
+
   return (
-    <div>
-      <h2 className="control-heading">Stickers</h2>
-      <div className="control-group">
+    <div className="stickers-content-container">
+      <div className="stickers-search">
         <input
           type="text"
-          value={stickerInput}
-          onChange={(e) => setStickerInput(e.target.value)}
-          placeholder="Enter emoji or sticker"
+          value={searchQuery}
+          onChange={e => handleSearch(e.target.value)}
+          placeholder="Search stickers..."
+          className="stickers-search-input"
         />
-        <button onClick={handleAddSticker}>Add Sticker</button>
       </div>
-      <div className="quick-stickers">
-        {quickStickers.map((sticker) => (
+
+      <div className="stickers-categories">
+        {STICKER_CATEGORIES.map(category => (
           <button
-            key={sticker}
+            key={category.name}
+            className={`category-button ${activeCategory === category.name ? 'active' : ''}`}
+            onClick={() => setActiveCategory(category.name)}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+
+      <div className="stickers-grid">
+        {currentStickers.map((sticker, index) => (
+          <button
+            key={`${sticker}-${index}`}
             onClick={() => addSticker(sticker)}
-            className="quick-sticker-btn"
+            className="sticker-button"
           >
             {sticker}
           </button>
         ))}
+      </div>
+
+      <div className="stickers-actions">
+        <button className="action-button delete">Delete</button>
+        <button className="action-button done">Done</button>
       </div>
     </div>
   );
