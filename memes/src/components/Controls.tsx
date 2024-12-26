@@ -3,7 +3,8 @@ import './Controls.css';
 import { TextControls } from './TextControls';
 import { Stickers } from './Stickers';
 import { Layouts } from './Layouts';
-import { Download } from './Download';
+import { Templates } from './Templates';
+import { Share } from './Share';
 
 type Tab = 'text' | 'stickers' | 'layouts' | 'templates' | 'share' | 'more';
 
@@ -19,9 +20,9 @@ export const Controls: FC = () => {
       case 'layouts':
         return <Layouts />;
       case 'templates':
-        return <div>Templates coming soon</div>;
+        return <Templates />;
       case 'share':
-        return <Download />;
+        return <Share />;
       case 'more':
         return <div>More options coming soon</div>;
       default:
