@@ -1,31 +1,60 @@
 .controls-area {
-  padding: 1em 0;
-  background: rgba(255, 243, 224, 0.95);
+  padding: 0;
+  background: #ffffff;
   width: 360px;
   height: 100%;
   flex-shrink: 0;
-  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.controls-tabs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.tab-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tab-button.active {
+  background: #e7f3ff;
+  color: #0d6efd;
+}
+
+.tab-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.tab-label {
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .controls-area-content {
   box-sizing: border-box;
-  padding: 0.25em 1em 0;
+  padding: 16px;
   overflow-y: auto;
   height: 100%;
-}
-
-.control-heading {
-  margin: 0 0 0.5em;
-  font-size: 1.1em;
-  color: #3e2723;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  padding-bottom: 0.3em;
-  border-bottom: 2px solid #bcaaa4;
-}
-
-.control-heading:not(:first-child) {
-  margin-top: 1em;
 }
 
 @media screen and (max-width: 600px) {
@@ -35,7 +64,10 @@
     overflow-y: auto;
   }
 
-  .controls-area-content {
-    height: 100%;
+  .controls-tabs {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 10;
   }
 }
