@@ -7,22 +7,23 @@
 
 .layouts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
   width: 100%;
 }
 
 .layout-button {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 12px;
+  justify-content: center;
+  padding: 16px;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  aspect-ratio: 1;
+  width: 100%;
 }
 
 .layout-button:hover {
@@ -30,17 +31,20 @@
 }
 
 .layout-button.active {
-  background: #e7f3ff;
-  border-color: #0d6efd;
-  color: #0d6efd;
+  background: #4A90E2;
+  color: white;
+  border-color: #4A90E2;
 }
 
 .layout-icon {
-  font-size: 24px;
-  line-height: 1;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.layout-name {
-  font-size: 13px;
-  font-weight: 500;
+.layout-icon svg {
+  width: 100%;
+  height: 100%;
 }

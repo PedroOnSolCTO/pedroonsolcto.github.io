@@ -6,21 +6,21 @@ import { Layouts } from './Layouts';
 import { Templates } from './Templates';
 import { Share } from './Share';
 
-type Tab = 'text' | 'stickers' | 'layouts' | 'templates' | 'share';
+type Tab = 'templates' | 'layouts' | 'text' | 'stickers' | 'share';
 
 export const Controls: FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('text');
+  const [activeTab, setActiveTab] = useState<Tab>('templates');
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'templates':
+        return <Templates />;
+      case 'layouts':
+        return <Layouts />;
       case 'text':
         return <TextControls />;
       case 'stickers':
         return <Stickers />;
-      case 'layouts':
-        return <Layouts />;
-      case 'templates':
-        return <Templates />;
       case 'share':
         return <Share />;
       default:
@@ -31,6 +31,24 @@ export const Controls: FC = () => {
   return (
     <div className="controls-area">
       <div className="controls-tabs">
+        <button 
+          className={`tab-button ${activeTab === 'templates' ? 'active' : ''}`}
+          onClick={() => setActiveTab('templates')}
+        >
+          <svg className="tab-icon" viewBox="0 0 24 24">
+            <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z M17,17H7V7H17V17Z" />
+          </svg>
+          <span className="tab-label">Templates</span>
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'layouts' ? 'active' : ''}`}
+          onClick={() => setActiveTab('layouts')}
+        >
+          <svg className="tab-icon" viewBox="0 0 24 24">
+            <path d="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" />
+          </svg>
+          <span className="tab-label">Layouts</span>
+        </button>
         <button 
           className={`tab-button ${activeTab === 'text' ? 'active' : ''}`}
           onClick={() => setActiveTab('text')}
@@ -48,24 +66,6 @@ export const Controls: FC = () => {
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
           </svg>
           <span className="tab-label">Stickers</span>
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'layouts' ? 'active' : ''}`}
-          onClick={() => setActiveTab('layouts')}
-        >
-          <svg className="tab-icon" viewBox="0 0 24 24">
-            <path d="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" />
-          </svg>
-          <span className="tab-label">Layouts</span>
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'templates' ? 'active' : ''}`}
-          onClick={() => setActiveTab('templates')}
-        >
-          <svg className="tab-icon" viewBox="0 0 24 24">
-            <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z M17,17H7V7H17V17Z" />
-          </svg>
-          <span className="tab-label">Templates</span>
         </button>
         <button 
           className={`tab-button ${activeTab === 'share' ? 'active' : ''}`}
