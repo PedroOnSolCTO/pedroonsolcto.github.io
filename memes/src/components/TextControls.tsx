@@ -10,7 +10,7 @@ const FONT_FAMILIES = [
   'Comic Sans MS',
   'Times New Roman',
   'Helvetica',
-  'Verdana'
+  'Verdana',
 ];
 
 const COLOR_PALETTE = [
@@ -22,7 +22,7 @@ const COLOR_PALETTE = [
   { color: '#ffa726', name: 'Orange' },
   { color: '#ff5722', name: 'Red' },
   { color: '#e91e63', name: 'Pink' },
-  { color: '#9c27b0', name: 'Purple' }
+  { color: '#9c27b0', name: 'Purple' },
 ];
 
 const TEXT_STYLES = [
@@ -30,7 +30,7 @@ const TEXT_STYLES = [
   { id: 'bold', name: 'Bold' },
   { id: 'italic', name: 'Italic' },
   { id: 'outline', name: 'Outline' },
-  { id: 'shadow', name: 'Shadow' }
+  { id: 'shadow', name: 'Shadow' },
 ];
 
 export const TextControls: FC = () => {
@@ -75,7 +75,7 @@ export const TextControls: FC = () => {
                 type="text"
                 placeholder="Search fonts..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 className="search-input"
               />
             </div>
@@ -136,18 +136,18 @@ export const TextControls: FC = () => {
           onClick={() => setActiveTab('colors')}
         >
           <svg className="tab-icon" viewBox="0 0 24 24">
-            <path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z" />
+            <path d="M12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2C17.5,2 22,6 22,11A6,6 0 0,1 16,17H14.2C13.9,17 13.7,17.2 13.7,17.5C13.7,17.6 13.8,17.7 13.8,17.8C14.2,18.3 14.4,18.9 14.4,19.5C14.5,20.9 13.4,22 12,22M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C12.3,20 12.5,19.8 12.5,19.5C12.5,19.3 12.4,19.2 12.4,19.1C12,18.6 11.8,18.1 11.8,17.5C11.8,16.1 12.9,15 14.3,15H16A4,4 0 0,0 20,11C20,7.1 16.4,4 12,4M6.5,10C7.3,10 8,10.7 8,11.5C8,12.3 7.3,13 6.5,13C5.7,13 5,12.3 5,11.5C5,10.7 5.7,10 6.5,10M9.5,6C10.3,6 11,6.7 11,7.5C11,8.3 10.3,9 9.5,9C8.7,9 8,8.3 8,7.5C8,6.7 8.7,6 9.5,6M14.5,6C15.3,6 16,6.7 16,7.5C16,8.3 15.3,9 14.5,9C13.7,9 13,8.3 13,7.5C13,6.7 13.7,6 14.5,6M17.5,10C18.3,10 19,10.7 19,11.5C19,12.3 18.3,13 17.5,13C16.7,13 16,12.3 16,11.5C16,10.7 16.7,10 17.5,10Z" />
           </svg>
-          Colors
+          <span className="tab-label">Colors</span>
         </button>
         <button
           className={`tab-button ${activeTab === 'fonts' ? 'active' : ''}`}
           onClick={() => setActiveTab('fonts')}
         >
           <svg className="tab-icon" viewBox="0 0 24 24">
-            <path d="M9.93,13.5H13.07L11.5,8.5L9.93,13.5M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,17L6.5,17L7.2,15H10.5L11,17M17.5,17H13L13.5,15H16.8L17.5,17Z" />
+            <path d="M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,6.87 17.26,6.43C16.73,6 16.11,6 15.5,6H13V16.5C13,17 13,17.5 13.33,17.75C13.67,18 14.33,18 15,18V19H9V18C9.67,18 10.33,18 10.67,17.75C11,17.5 11,17 11,16.5V6H8.5C7.89,6 7.27,6 6.74,6.43C6.21,6.87 5.75,7.74 5.3,8.61L4.34,8.35L5.5,4H18.5Z" />
           </svg>
-          Fonts
+          <span className="tab-label">Fonts</span>
         </button>
         <button
           className={`tab-button ${activeTab === 'styles' ? 'active' : ''}`}
@@ -156,7 +156,7 @@ export const TextControls: FC = () => {
           <svg className="tab-icon" viewBox="0 0 24 24">
             <path d="M9.6,14L12,7.7L14.4,14M11,5L5.5,19H7.7L8.8,16H15L16.1,19H18.3L13,5H11Z" />
           </svg>
-          Styles
+          <span className="tab-label">Styles</span>
         </button>
       </div>
       <button className="add-text-button" onClick={handleAddText}>
@@ -165,9 +165,7 @@ export const TextControls: FC = () => {
         </svg>
         Add Text
       </button>
-      <div className="text-controls-content">
-        {renderTabContent()}
-      </div>
+      <div className="text-controls-content">{renderTabContent()}</div>
     </div>
   );
 };

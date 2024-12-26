@@ -1,14 +1,13 @@
 import { FC, useEffect, useRef } from 'react';
 import { useDrawing } from '../hooks/useDrawing';
-import { useTextOverlay } from '../hooks/useTextOverlay';
-import { useStickers } from '../hooks/useStickers';
 import { useGifHandling } from '../hooks/useGifHandling';
-import { Sticker } from './Sticker';
-import { Frames } from './Frames';
-import { Download } from './Download';
-import './Preview.css';
-import { TrashCan } from './TrashCan';
+import { useStickers } from '../hooks/useStickers';
+import { useTextOverlay } from '../hooks/useTextOverlay';
 import { DrawingIndicator } from './DrawingIndicator';
+import { Frames } from './Frames';
+import './Preview.css';
+import { Sticker } from './Sticker';
+import { TrashCan } from './TrashCan';
 
 export const Preview: FC = () => {
   const { drawCanvasRef, drawingState, draw, startDrawing, stopDrawing } = useDrawing();
@@ -138,11 +137,6 @@ export const Preview: FC = () => {
           onToggleAll={toggleAllFrames}
         />
       )}
-      <Download
-        previewCanvasRef={previewCanvasRef}
-        memeCanvasRef={memeCanvasRef}
-        drawCanvasRef={drawCanvasRef}
-      />
       <DrawingIndicator />
       <TrashCan />
     </div>

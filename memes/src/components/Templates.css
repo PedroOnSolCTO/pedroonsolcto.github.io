@@ -43,7 +43,6 @@
 
 .template-button:hover {
   background: #e9ecef;
-  transform: translateY(-1px);
 }
 
 .template-thumbnail {
