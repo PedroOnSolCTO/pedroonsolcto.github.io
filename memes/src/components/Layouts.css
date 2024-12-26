@@ -1,0 +1,46 @@
+.layouts-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.layouts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+.layout-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.layout-button:hover {
+  background: #e9ecef;
+}
+
+.layout-button.active {
+  background: #e7f3ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.layout-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.layout-name {
+  font-size: 13px;
+  font-weight: 500;
+}

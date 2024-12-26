@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import './Controls.css';
 import { TextControls } from './TextControls';
 import { Stickers } from './Stickers';
+import { Layouts } from './Layouts';
 import { Download } from './Download';
 
 type Tab = 'text' | 'stickers' | 'layouts' | 'templates' | 'share' | 'more';
@@ -16,7 +17,7 @@ export const Controls: FC = () => {
       case 'stickers':
         return <Stickers />;
       case 'layouts':
-        return <div>Layouts coming soon</div>;
+        return <Layouts />;
       case 'templates':
         return <div>Templates coming soon</div>;
       case 'share':
@@ -49,14 +50,14 @@ export const Controls: FC = () => {
           className={`tab-button ${activeTab === 'layouts' ? 'active' : ''}`}
           onClick={() => setActiveTab('layouts')}
         >
-          <span className="tab-icon">⚏</span>
+          <span className="tab-icon">⬒</span>
           <span className="tab-label">Layouts</span>
         </button>
         <button 
           className={`tab-button ${activeTab === 'templates' ? 'active' : ''}`}
           onClick={() => setActiveTab('templates')}
         >
-          <span className="tab-icon">🖼️</span>
+          <span className="tab-icon">📄</span>
           <span className="tab-label">Templates</span>
         </button>
         <button 
