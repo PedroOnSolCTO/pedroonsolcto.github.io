@@ -1,101 +1,112 @@
 import { useState, useCallback } from 'react';
 
-interface TextSettings {
-  topText: string;
-  bottomText: string;
+interface TextObject {
+  id: string;
+  text: string;
   fontSize: number;
   fontFamily: string;
   fillColor: string;
-  strokeColor: string;
-  textShadow: boolean;
+  x: number;
+  y: number;
+  textStyle: 'normal' | 'white-bg' | 'black-bg' | 'shadow';
+}
+
+interface TextSettings {
+  currentText: string;
+  fontSize: number;
+  fontFamily: string;
+  fillColor: string;
+  textStyle: 'normal' | 'white-bg' | 'black-bg' | 'shadow';
 }
 
 export const useTextOverlay = () => {
+  const [textObjects, setTextObjects] = useState<TextObject[]>([]);
+  const [selectedTextId, setSelectedTextId] = useState<string | null>(null);
   const [textSettings, setTextSettings] = useState<TextSettings>({
-    topText: '',
-    bottomText: '',
+    currentText: 'Sample Text',
     fontSize: 48,
-    fontFamily: 'Impact',
-    fillColor: '#ffffff',
-    strokeColor: '#000000',
-    textShadow: true,
+    fontFamily: 'Arial',
+    fillColor: '#000000',
+    textStyle: 'normal',
   });
 
-  const drawText = useCallback((text: string, y: number, fontSize: number, ctx: CanvasRenderingContext2D) => {
-    ctx.save();
-
-    // Set text properties
-    ctx.font = `${fontSize}px ${textSettings.fontFamily}`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    // Add text shadow if enabled
-    if (textSettings.textShadow) {
-      ctx.shadowColor = 'rgba(0,0,0,0.5)';
-      ctx.shadowBlur = 4;
-      ctx.shadowOffsetX = 2;
-      ctx.shadowOffsetY = 2;
-    }
-
-    // Calculate text width and position
-    const maxWidth = ctx.canvas.width * 0.9;
-    const x = ctx.canvas.width / 2;
-    const lineHeight = fontSize * 1.2;
-
-    // Function to wrap text
-    const wrapText = (text: string, maxWidth: number) => {
-      const words = text.split(' ');
-      const lines: string[] = [];
-      let currentLine = words[0];
-
-      for (let i = 1; i < words.length; i++) {
-        const word = words[i];
-        const width = ctx.measureText(currentLine + ' ' + word).width;
-        if (width > maxWidth) {
-          lines.push(currentLine);
-          currentLine = word;
-        } else {
-          currentLine += ' ' + word;
-        }
-      }
-      lines.push(currentLine);
-      return lines;
+  const addNewTextObject = useCallback(() => {
+    const newId = Date.now().toString();
+    const newTextObject: TextObject = {
+      id: newId,
+      text: textSettings.currentText,
+      fontSize: textSettings.fontSize,
+      fontFamily: textSettings.fontFamily,
+      fillColor: textSettings.fillColor,
+      x: 0.5, // Center of canvas
+      y: 0.5, // Center of canvas
+      textStyle: textSettings.textStyle,
     };
 
-    // Get wrapped lines
-    const lines = wrapText(text, maxWidth);
-
-    // Calculate vertical position for text block
-    const totalHeight = lines.length * lineHeight;
-    let yPos = y * ctx.canvas.height;
-    if (y < 0.5) {
-      yPos += totalHeight / 2; // For top text
-    } else {
-      yPos -= totalHeight / 2; // For bottom text
-    }
-
-    // Draw each line
-    lines.forEach((line, i) => {
-      // Draw stroke
-      ctx.strokeStyle = textSettings.strokeColor;
-      ctx.lineWidth = fontSize / 15;
-      ctx.strokeText(line.trim(), x, yPos + i * lineHeight);
-
-      // Draw fill
-      ctx.fillStyle = textSettings.fillColor;
-      ctx.fillText(line.trim(), x, yPos + i * lineHeight);
-    });
-
-    ctx.restore();
+    setTextObjects(prev => [...prev, newTextObject]);
+    setSelectedTextId(newId);
   }, [textSettings]);
 
   const updateTextSettings = useCallback((newSettings: Partial<TextSettings>) => {
-    setTextSettings(prev => ({ ...prev, ...newSettings }));
+    setTextSettings(prev => {
+      const updated = { ...prev, ...newSettings };
+      
+      // If we have a selected text object, update it as well
+      if (selectedTextId) {
+        setTextObjects(prev => prev.map(obj => 
+          obj.id === selectedTextId
+            ? { 
+                ...obj, 
+                text: updated.currentText ?? obj.text,
+                fontSize: updated.fontSize ?? obj.fontSize,
+                fontFamily: updated.fontFamily ?? obj.fontFamily,
+                fillColor: updated.fillColor ?? obj.fillColor,
+                textStyle: updated.textStyle ?? obj.textStyle,
+              }
+            : obj
+        ));
+      }
+      
+      return updated;
+    });
+  }, [selectedTextId]);
+
+  const deleteSelectedText = useCallback(() => {
+    if (selectedTextId) {
+      setTextObjects(prev => prev.filter(obj => obj.id !== selectedTextId));
+      setSelectedTextId(null);
+    }
+  }, [selectedTextId]);
+
+  const selectTextObject = useCallback((id: string) => {
+    setSelectedTextId(id);
+    const textObject = textObjects.find(obj => obj.id === id);
+    if (textObject) {
+      setTextSettings(prev => ({
+        ...prev,
+        currentText: textObject.text,
+        fontSize: textObject.fontSize,
+        fontFamily: textObject.fontFamily,
+        fillColor: textObject.fillColor,
+        textStyle: textObject.textStyle,
+      }));
+    }
+  }, [textObjects]);
+
+  const moveTextObject = useCallback((id: string, x: number, y: number) => {
+    setTextObjects(prev => prev.map(obj =>
+      obj.id === id ? { ...obj, x, y } : obj
+    ));
   }, []);
 
   return {
+    textObjects,
+    selectedTextId,
     textSettings,
+    addNewTextObject,
     updateTextSettings,
-    drawText,
+    deleteSelectedText,
+    selectTextObject,
+    moveTextObject,
   };
 };
