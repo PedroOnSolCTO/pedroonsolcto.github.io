@@ -1,21 +1,24 @@
 import { FC } from 'react';
+import './App.css';
 import { Controls } from './components/Controls';
-// import { Frames } from './components/Frames';
 import { Header } from './components/Header';
 import { Preview } from './components/Preview';
-import './App.css';
+import { Templates } from './components/Templates';
+import { TemplateProvider } from './contexts/TemplateContext';
 
-const App: FC = () => {
+export const App: FC = () => {
   return (
-    <>
-      <Header />
-
-      <div className="wrapper">
-        {/* <Frames /> */}
-        <Preview />
-        <Controls />
+    <TemplateProvider>
+      <div className="app">
+        <Header />
+        <div className="wrapper">
+          <Preview />
+          <Controls>
+            <Templates />
+          </Controls>
+        </div>
       </div>
-    </>
+    </TemplateProvider>
   );
 };
 

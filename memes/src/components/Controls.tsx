@@ -1,20 +1,22 @@
-import { FC, useState } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import './Controls.css';
-import { TextControls } from './TextControls';
-import { Stickers } from './Stickers';
 import { Layouts } from './Layouts';
-import { Templates } from './Templates';
 import { Share } from './Share';
+import { Stickers } from './Stickers';
+import { TextControls } from './TextControls';
 
 type Tab = 'templates' | 'layouts' | 'text' | 'stickers' | 'share';
 
-export const Controls: FC = () => {
+export const Controls: FC<PropsWithChildren> = ({ children }) => {
   const [activeTab, setActiveTab] = useState<Tab>('templates');
+
+  console.log('Active tab:', activeTab); // Debug log
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'templates':
-        return <Templates />;
+        console.log('Rendering templates tab'); // Debug log
+        return children;
       case 'layouts':
         return <Layouts />;
       case 'text':
@@ -31,7 +33,7 @@ export const Controls: FC = () => {
   return (
     <div className="controls-area">
       <div className="controls-tabs">
-        <button 
+        <button
           className={`tab-button ${activeTab === 'templates' ? 'active' : ''}`}
           onClick={() => setActiveTab('templates')}
         >
@@ -40,7 +42,7 @@ export const Controls: FC = () => {
           </svg>
           <span className="tab-label">Templates</span>
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'layouts' ? 'active' : ''}`}
           onClick={() => setActiveTab('layouts')}
         >
@@ -49,7 +51,7 @@ export const Controls: FC = () => {
           </svg>
           <span className="tab-label">Layouts</span>
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'text' ? 'active' : ''}`}
           onClick={() => setActiveTab('text')}
         >
@@ -58,7 +60,7 @@ export const Controls: FC = () => {
           </svg>
           <span className="tab-label">Text</span>
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'stickers' ? 'active' : ''}`}
           onClick={() => setActiveTab('stickers')}
         >
@@ -67,7 +69,7 @@ export const Controls: FC = () => {
           </svg>
           <span className="tab-label">Stickers</span>
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'share' ? 'active' : ''}`}
           onClick={() => setActiveTab('share')}
         >
@@ -77,9 +79,7 @@ export const Controls: FC = () => {
           <span className="tab-label">Share</span>
         </button>
       </div>
-      <div className="controls-area-content">
-        {renderTabContent()}
-      </div>
+      <div className="controls-area-content">{renderTabContent()}</div>
     </div>
   );
 };

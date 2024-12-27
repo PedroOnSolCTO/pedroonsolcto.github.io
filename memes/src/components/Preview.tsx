@@ -2,6 +2,7 @@ import { FC, useEffect, useRef } from 'react';
 import { useDrawing } from '../hooks/useDrawing';
 import { useGifHandling } from '../hooks/useGifHandling';
 import { useStickers } from '../hooks/useStickers';
+import { useTemplate } from '../contexts/TemplateContext';
 import { useTextOverlay } from '../hooks/useTextOverlay';
 import { DrawingIndicator } from './DrawingIndicator';
 import { Frames } from './Frames';
@@ -12,10 +13,10 @@ import { TrashCan } from './TrashCan';
 export const Preview: FC = () => {
   const { drawCanvasRef, drawingState, draw, startDrawing, stopDrawing } = useDrawing();
   const { textSettings, drawText } = useTextOverlay();
+  const { selectedTemplateImage } = useTemplate();
   const {
     stickers,
     selectedSticker,
-    addSticker,
     removeSticker,
     updateStickerPosition,
     updateStickerScale,
@@ -39,13 +40,95 @@ export const Preview: FC = () => {
     downloadAnimatedGif,
   } = useGifHandling(previewCanvasRef, memeCanvasRef, drawCanvasRef);
 
+  // Load template image when it changes
+  useEffect(() => {
+    if (!selectedTemplateImage) return;
+
+    const previewCanvas = previewCanvasRef.current;
+    if (!previewCanvas) return;
+
+    const ctx = previewCanvas.getContext('2d');
+    if (!ctx) return;
+
+    // Create new image and set up handlers before setting src
+    const img = new Image();
+    let isCurrentImage = true; // Track if this is still the current image
+
+    img.onload = () => {
+      // Check if this is still the current image
+      if (!isCurrentImage) return;
+
+      // Calculate dimensions while preserving aspect ratio
+      const maxWidth = 800; // Maximum canvas width
+      const maxHeight = 600; // Maximum canvas height
+      let targetWidth = img.width;
+      let targetHeight = img.height;
+
+      // Scale down if image is too large
+      if (img.width > maxWidth || img.height > maxHeight) {
+        const widthRatio = maxWidth / img.width;
+        const heightRatio = maxHeight / img.height;
+        const scale = Math.min(widthRatio, heightRatio);
+        targetWidth = Math.round(img.width * scale);
+        targetHeight = Math.round(img.height * scale);
+      }
+
+      // Set minimum size
+      targetWidth = Math.max(targetWidth, 400);
+      targetHeight = Math.max(targetHeight, 300);
+
+      // Clear and resize all canvases
+      const canvases = [
+        previewCanvas, 
+        memeCanvasRef.current, 
+        drawCanvasRef.current
+      ].filter(Boolean);
+
+      canvases.forEach(canvas => {
+        const canvasCtx = canvas.getContext('2d');
+        if (!canvasCtx) return;
+
+        // Set size
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        // Set rendering quality
+        canvasCtx.imageSmoothingEnabled = true;
+        canvasCtx.imageSmoothingQuality = 'high';
+
+        // Clear canvas
+        canvasCtx.clearRect(0, 0, targetWidth, targetHeight);
+      });
+
+      // Draw image on preview canvas
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+      // Update container size to match canvas
+      if (containerRef.current) {
+        containerRef.current.style.width = `${targetWidth}px`;
+        containerRef.current.style.height = `${targetHeight}px`;
+      }
+    };
+
+    img.onerror = error => {
+      if (!isCurrentImage) return;
+      console.error('Failed to load template image:', error);
+    };
+
+    img.src = selectedTemplateImage;
+
+    // Clean up function
+    return () => {
+      isCurrentImage = false;
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [selectedTemplateImage]);
+
   // Effect to draw text whenever text settings change
   useEffect(() => {
     const ctx = memeCanvasRef.current?.getContext('2d');
     if (!ctx) return;
-
-    // Clear the canvas
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     // Draw top and bottom text
     if (textSettings.topText) {
@@ -55,14 +138,6 @@ export const Preview: FC = () => {
       drawText(textSettings.bottomText, 0.9, textSettings.fontSize, ctx);
     }
   }, [textSettings, drawText]);
-
-  // Effect to load default GIF
-  useEffect(() => {
-    fetch('pedro.gif')
-      .then(response => response.arrayBuffer())
-      .then(buffer => handleGifLoad(buffer))
-      .catch(console.error);
-  }, [handleGifLoad]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -79,18 +154,6 @@ export const Preview: FC = () => {
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
     updateStickerPosition(stickerId, x, y);
-  };
-
-  const handleGifUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = event => {
-      const buffer = event.target?.result as ArrayBuffer;
-      handleGifLoad(buffer);
-    };
-    reader.readAsArrayBuffer(file);
   };
 
   return (
