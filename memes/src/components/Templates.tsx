@@ -1,66 +1,46 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import pedroForward from '../assets/templates/pedro-forward.jpg';
+import pedroSideBySide from '../assets/templates/pedro-side-by-side.jpg';
+import pedroSideEye from '../assets/templates/pedro-side-eye.jpg';
 import './Templates.css';
 
 const TEMPLATE_OPTIONS = [
   {
-    id: 'drake',
-    name: 'Drake Hotline Bling',
-    thumbnail: 'https://i.imgflip.com/30b1gx.jpg',
-    description: 'Drake prefers one option over another'
+    id: 'pedro-side-by-side',
+    name: 'Pedro',
+    thumbnail: pedroSideBySide,
+    description: 'Pedro the monkey giving a side-eye look',
   },
   {
-    id: 'distracted',
-    name: 'Distracted Boyfriend',
-    thumbnail: 'https://i.imgflip.com/1ur9b0.jpg',
-    description: 'Man looking back at another woman'
+    id: 'pedro-forward',
+    name: 'Pedro Forward Look',
+    thumbnail: pedroForward,
+    description: 'Pedro the monkey looking forward',
   },
   {
-    id: 'buttons',
-    name: 'Two Buttons',
-    thumbnail: 'https://i.imgflip.com/1g8my4.jpg',
-    description: 'Person sweating over two buttons'
+    id: 'pedro-side-eye',
+    name: 'Pedro Side-Eye Look',
+    thumbnail: pedroSideEye,
+    description: 'Pedro the monkey giving a side-eye look',
   },
-  {
-    id: 'expanding',
-    name: 'Expanding Brain',
-    thumbnail: 'https://i.imgflip.com/1jwhww.jpg',
-    description: 'Increasingly complex ideas'
-  },
-  {
-    id: 'doge',
-    name: 'Doge',
-    thumbnail: 'https://i.imgflip.com/4t0m5.jpg',
-    description: 'Such wow, very meme'
-  },
-  {
-    id: 'change-mind',
-    name: 'Change My Mind',
-    thumbnail: 'https://i.imgflip.com/24y43o.jpg',
-    description: 'Change my mind debate table'
-  }
 ];
 
 export const Templates: FC = () => {
+  const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATE_OPTIONS[0].id);
+
   const handleTemplateSelect = (templateId: string) => {
+    setSelectedTemplate(templateId);
     // TODO: Implement template selection logic
     console.log('Selected template:', templateId);
   };
 
   return (
     <div className="templates-content-container">
-      <div className="templates-search">
-        <input
-          type="text"
-          placeholder="Search templates..."
-          className="templates-search-input"
-        />
-      </div>
-
       <div className="templates-grid">
-        {TEMPLATE_OPTIONS.map((template) => (
+        {TEMPLATE_OPTIONS.map(template => (
           <button
             key={template.id}
-            className="template-button"
+            className={`template-button ${selectedTemplate === template.id ? 'active' : ''}`}
             onClick={() => handleTemplateSelect(template.id)}
             title={template.description}
           >
