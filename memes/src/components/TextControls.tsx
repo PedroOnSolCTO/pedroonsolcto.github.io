@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useTextOverlay } from '../hooks/useTextOverlay';
 import './TextControls.css';
 
@@ -33,10 +33,31 @@ const TEXT_STYLES = [
   { id: 'shadow', name: 'Shadow' },
 ];
 
+const RECENT_COLORS_KEY = 'meme-generator-recent-colors';
+
 export const TextControls: FC = () => {
   const { textSettings, updateTextSettings, addNewTextObject } = useTextOverlay();
   const [activeTab, setActiveTab] = useState<ToolTab>('colors');
   const [searchQuery, setSearchQuery] = useState('');
+  const [recentColors, setRecentColors] = useState<Array<{ color: string; name: string }>>(() => {
+    const saved = localStorage.getItem(RECENT_COLORS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(RECENT_COLORS_KEY, JSON.stringify(recentColors));
+  }, [recentColors]);
+
+  const handleColorSelect = (color: string, name: string, saveToRecent = true) => {
+    updateTextSettings({ fillColor: color });
+    
+    if (saveToRecent && !recentColors.some(c => c.color === color)) {
+      // Only add to recent colors if it's not already in the list
+      setRecentColors(prev => {
+        return [{ color, name }, ...prev].slice(0, 3);
+      });
+    }
+  };
 
   const handleAddText = () => {
     addNewTextObject();
@@ -50,18 +71,53 @@ export const TextControls: FC = () => {
     switch (activeTab) {
       case 'colors':
         return (
-          <div className="text-controls-grid">
-            {COLOR_PALETTE.map(({ color, name }) => (
-              <button
-                key={color}
-                className={`text-control-button color-button ${textSettings.fillColor === color ? 'active' : ''}`}
-                onClick={() => updateTextSettings({ fillColor: color })}
-                title={name}
-              >
-                <div className="color-preview" style={{ background: color }} />
-                <span className="button-label">{name}</span>
-              </button>
-            ))}
+          <div className="text-controls-content">
+            {recentColors.length > 0 && (
+              <div className="color-section">
+                <h3 className="section-title">Recent Colors</h3>
+                <div className="text-controls-grid">
+                  {recentColors.map(({ color, name }) => (
+                    <button
+                      key={color}
+                      className={`text-control-button color-button ${textSettings.fillColor === color ? 'active' : ''}`}
+                      onClick={() => handleColorSelect(color, name, false)}
+                      title={name}
+                    >
+                      <div className="color-preview" style={{ background: color }} />
+                      <span className="button-label">{name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            <div className="color-section">
+              <h3 className="section-title">Colors</h3>
+              <div className="text-controls-grid">
+                <label className="text-control-button color-picker-button">
+                  <input
+                    type="color"
+                    value={textSettings.fillColor}
+                    onChange={(e) => handleColorSelect(e.target.value, 'Custom', false)}
+                    onBlur={(e) => handleColorSelect(e.target.value, 'Custom', true)}
+                    className="color-picker-input"
+                  />
+                  <div className="color-preview" />
+                  <span className="button-label">Custom</span>
+                </label>
+                {COLOR_PALETTE.map(({ color, name }) => (
+                  <button
+                    key={color}
+                    className={`text-control-button color-button ${textSettings.fillColor === color ? 'active' : ''}`}
+                    onClick={() => handleColorSelect(color, name, false)}
+                    title={name}
+                  >
+                    <div className="color-preview" style={{ background: color }} />
+                    <span className="button-label">{name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         );
       case 'fonts':
@@ -69,7 +125,7 @@ export const TextControls: FC = () => {
           <div className="text-controls-content">
             <div className="search-bar">
               <svg className="search-icon" viewBox="0 0 24 24">
-                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5M6.5,10C7.3,10 8,10.7 8,11.5C8,12.3 7.3,13 6.5,13C5.7,13 5,12.3 5,11.5C5,10.7 5.7,10 6.5,10M9.5,6C10.3,6 11,6.7 11,7.5C11,8.3 10.3,9 9.5,9C8.7,9 8,8.3 8,7.5C8,6.7 8.7,6 9.5,6M14.5,6C15.3,6 16,6.7 16,7.5C16,8.3 15.3,9 14.5,9C13.7,9 13,8.3 13,7.5C13,6.7 13.7,6 14.5,6M17.5,10C18.3,10 19,10.7 19,11.5C19,12.3 18.3,13 17.5,13C16.7,13 16,12.3 16,11.5C16,10.7 16.7,10 17.5,10Z" />
               </svg>
               <input
                 type="text"
