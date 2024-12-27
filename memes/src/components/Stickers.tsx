@@ -1,65 +1,21 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useStickers } from '../hooks/useStickers';
 import './Stickers.css';
 
-const STICKER_CATEGORIES = [
-  {
-    name: 'Recent',
-    stickers: ['😂', '🔥', '💯', '👀', '🤔', '💪', '🎉', '❤️'],
-  },
-  {
-    name: 'Smileys',
-    stickers: ['😀', '😃', '😄', '😁', '😅', '😂', '🤣', '😊', '😇', '🙂', '😉', '😍'],
-  },
-  {
-    name: 'Animals',
-    stickers: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮'],
-  },
-  {
-    name: 'Food',
-    stickers: ['🍏', '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍈', '🍒', '🍑'],
-  },
+const STICKERS = [
+  '🐒', '🦍', '🦧', '🐵', '🙈', '🙉',  // Row 1: Monkeys
+  '🙊', '🍌', '🌴', '🌳', '🌿', '🍃',  // Row 2: Monkey, Banana, Trees
+  '🌱', '🎋', '🦜', '🦁', '🐯', '🐘',  // Row 3: Plants and Animals
+  '🦒', '🌺'                            // Row 4: Giraffe, Flower
 ];
 
 export const Stickers: FC = () => {
   const { addSticker } = useStickers();
-  const [activeCategory, setActiveCategory] = useState('Recent');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    // If implementing search, you would filter stickers here
-  };
-
-  const currentStickers =
-    STICKER_CATEGORIES.find(cat => cat.name === activeCategory)?.stickers || [];
 
   return (
     <div className="stickers-content-container">
-      <div className="stickers-search">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => handleSearch(e.target.value)}
-          placeholder="Search stickers..."
-          className="stickers-search-input"
-        />
-      </div>
-
-      <div className="stickers-categories">
-        {STICKER_CATEGORIES.map(category => (
-          <button
-            key={category.name}
-            className={`category-button ${activeCategory === category.name ? 'active' : ''}`}
-            onClick={() => setActiveCategory(category.name)}
-          >
-            {category.name}
-          </button>
-        ))}
-      </div>
-
       <div className="stickers-grid">
-        {currentStickers.map((sticker, index) => (
+        {STICKERS.map((sticker, index) => (
           <button
             key={`${sticker}-${index}`}
             onClick={() => addSticker(sticker)}
@@ -68,11 +24,6 @@ export const Stickers: FC = () => {
             {sticker}
           </button>
         ))}
-      </div>
-
-      <div className="stickers-actions">
-        <button className="action-button delete">Delete</button>
-        <button className="action-button done">Done</button>
       </div>
     </div>
   );
