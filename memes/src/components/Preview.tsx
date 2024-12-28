@@ -1,14 +1,12 @@
 import { FC, useEffect, useRef } from 'react';
+import { useStickersContext } from '../contexts/StickersContext';
+import { useTemplate } from '../contexts/TemplateContext';
 import { useDrawing } from '../hooks/useDrawing';
 import { useGifHandling } from '../hooks/useGifHandling';
-import { useStickers } from '../hooks/useStickers';
-import { useTemplate } from '../contexts/TemplateContext';
 import { useTextOverlay } from '../hooks/useTextOverlay';
 import { DrawingIndicator } from './DrawingIndicator';
-import { Frames } from './Frames';
 import './Preview.css';
 import { Sticker } from './Sticker';
-import { TrashCan } from './TrashCan';
 
 export const Preview: FC = () => {
   const { drawCanvasRef, drawingState, draw, startDrawing, stopDrawing } = useDrawing();
@@ -17,12 +15,12 @@ export const Preview: FC = () => {
   const {
     stickers,
     selectedSticker,
-    removeSticker,
     updateStickerPosition,
     updateStickerScale,
     updateStickerRotation,
+    removeSticker,
     selectSticker,
-  } = useStickers();
+  } = useStickersContext();
 
   const memeCanvasRef = useRef<HTMLCanvasElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,11 +76,9 @@ export const Preview: FC = () => {
       targetHeight = Math.max(targetHeight, 300);
 
       // Clear and resize all canvases
-      const canvases = [
-        previewCanvas, 
-        memeCanvasRef.current, 
-        drawCanvasRef.current
-      ].filter(Boolean);
+      const canvases = [previewCanvas, memeCanvasRef.current, drawCanvasRef.current].filter(
+        Boolean
+      );
 
       canvases.forEach(canvas => {
         const canvasCtx = canvas.getContext('2d');
@@ -157,30 +153,29 @@ export const Preview: FC = () => {
   };
 
   return (
-    <div className="preview-area">
-      <div
-        ref={containerRef}
-        className="meme-container"
-        id="meme-container"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onClick={() => selectSticker(null)}
-      >
-        <canvas ref={previewCanvasRef} id="preview-canvas"></canvas>
-        <canvas ref={memeCanvasRef} id="meme-canvas"></canvas>
+    <div className="preview-area" onClick={() => selectSticker(null)}>
+      <div ref={containerRef} className="meme-container">
+        <canvas ref={previewCanvasRef} id="preview-canvas" />
+        <canvas ref={memeCanvasRef} id="meme-canvas" />
         <canvas
           ref={drawCanvasRef}
           id="drawCanvas"
-          onMouseDown={e => startDrawing(e.nativeEvent)}
-          onMouseMove={e => draw(e.nativeEvent)}
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
           onMouseUp={stopDrawing}
           onMouseOut={stopDrawing}
-        ></canvas>
-        <div className="stickers-container">
+        />
+
+        <div className="stickers-container" onClick={e => e.stopPropagation()}>
           {stickers.map(sticker => (
             <Sticker
               key={sticker.id}
-              {...sticker}
+              id={sticker.id}
+              emoji={sticker.emoji}
+              x={sticker.x}
+              y={sticker.y}
+              scale={sticker.scale}
+              rotation={sticker.rotation}
               isSelected={selectedSticker === sticker.id}
               onSelect={selectSticker}
               onMove={updateStickerPosition}
@@ -190,18 +185,9 @@ export const Preview: FC = () => {
             />
           ))}
         </div>
+
+        {drawingState.isDrawing && <DrawingIndicator />}
       </div>
-      {gifInfo && (
-        <Frames
-          frames={gifInfo.frames}
-          currentFrame={currentFrame}
-          disabledFrames={disabledFrames}
-          onToggleFrame={toggleFrame}
-          onToggleAll={toggleAllFrames}
-        />
-      )}
-      <DrawingIndicator />
-      <TrashCan />
     </div>
   );
 };

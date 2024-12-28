@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useStickers } from '../hooks/useStickers';
+import { useStickersContext } from '../contexts/StickersContext';
 import './Stickers.css';
 
 const STICKERS = [
@@ -10,7 +10,7 @@ const STICKERS = [
 ];
 
 export const Stickers: FC = () => {
-  const { addSticker } = useStickers();
+  const { addSticker } = useStickersContext();
 
   return (
     <div className="stickers-content-container">

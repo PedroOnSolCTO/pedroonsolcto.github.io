@@ -4,6 +4,7 @@ import { Layouts } from './Layouts';
 import { Share } from './Share';
 import { Stickers } from './Stickers';
 import { TextControls } from './TextControls';
+import { Templates } from './Templates';
 
 type Tab = 'templates' | 'layouts' | 'text' | 'stickers' | 'share';
 
@@ -16,7 +17,7 @@ export const Controls: FC<PropsWithChildren> = ({ children }) => {
     switch (activeTab) {
       case 'templates':
         console.log('Rendering templates tab'); // Debug log
-        return children;
+        return <Templates />;
       case 'layouts':
         return <Layouts />;
       case 'text':
