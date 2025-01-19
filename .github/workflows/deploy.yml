@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Set this to your default branch
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install homepage dependencies
+        working-directory: homepage
+        run: npm ci
+
+      - name: Build homepage
+        working-directory: homepage
+        run: npm run build
+
+      - name: Install memes dependencies
+        working-directory: memes
+        run: npm ci
+
+      - name: Build memes
+        working-directory: memes
+        run: npm run build
+
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs  # The folder containing your built website files
+          branch: docs  # The branch to deploy to
+          clean: true  # Automatically remove deleted files from the deployment branch

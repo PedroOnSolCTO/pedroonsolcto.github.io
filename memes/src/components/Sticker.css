@@ -1,0 +1,134 @@
+.sticker {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+  font-size: 2em;
+  transform-origin: center;
+  transition: transform 0.1s ease;
+}
+
+.sticker.selected {
+  outline: 1px solid #00ff00;
+  border-radius: 8px;
+}
+
+.sticker-content {
+  padding: 0.5em;
+  position: relative;
+}
+
+.handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 1px solid #00ff00;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.handle.rotate {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  left: 50%;
+  bottom: -32px;
+  transform: translateX(-50%);
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2300ff00" d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/></svg>') 8 8, pointer;
+  background: white;
+  border: 1px solid #00ff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.handle.rotate::before {
+  content: "⟲";
+  color: #00ff00;
+  font-size: 14px;
+}
+
+.handle.rotate:active {
+  cursor: grabbing;
+}
+
+.sticker-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.sticker-controls * {
+  pointer-events: auto;
+}
+
+.handle.tl {
+  top: -5px;
+  left: -5px;
+  cursor: nw-resize;
+}
+
+.handle.tr {
+  top: -5px;
+  right: -5px;
+  cursor: ne-resize;
+}
+
+.handle.bl {
+  bottom: -5px;
+  left: -5px;
+  cursor: sw-resize;
+}
+
+.handle.br {
+  bottom: -5px;
+  right: -5px;
+  cursor: se-resize;
+}
+
+.handle.delete {
+  top: -16px;
+  right: -16px;
+  width: 20px;
+  height: 20px;
+  background: #ff4444;
+  border-color: #ff4444;
+  color: white;
+  font-size: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.handle.delete:active {
+  background: #ff2222;
+  border-color: #ff2222;
+}
+
+.handle.delete::before {
+  content: "×";
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Selection outline */
+.sticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #00ff00;
+  display: none;
+  pointer-events: none;
+}
+
+.sticker.selected::after {
+  display: block;
+}

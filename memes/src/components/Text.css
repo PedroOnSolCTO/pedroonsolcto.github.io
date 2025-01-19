@@ -1,0 +1,81 @@
+.text-object {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+  min-width: 50px;
+  min-height: 24px;
+  padding: 4px;
+}
+
+.text-object.selected {
+  outline: 1px solid #00ff00;
+}
+
+.text-object[contenteditable='true'] {
+  cursor: text;
+  user-select: text;
+  outline: 2px solid #00ff00;
+}
+
+.text-controls {
+  pointer-events: none;
+}
+
+.text-controls * {
+  pointer-events: auto;
+}
+
+.handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 1px solid #00ff00;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.handle.tl {
+  top: -5px;
+  left: -5px;
+  cursor: nw-resize;
+}
+
+.handle.tr {
+  top: -5px;
+  right: -5px;
+  cursor: ne-resize;
+}
+
+.handle.bl {
+  bottom: -5px;
+  left: -5px;
+  cursor: sw-resize;
+}
+
+.handle.br {
+  bottom: -5px;
+  right: -5px;
+  cursor: se-resize;
+}
+
+.handle.delete {
+  top: -16px;
+  right: -16px;
+  width: 20px;
+  height: 20px;
+  background: #ff4444;
+  border-color: #ff4444;
+  color: white;
+  font-size: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.handle.delete::before {
+  content: '×';
+  font-weight: bold;
+  font-size: 16px;
+}

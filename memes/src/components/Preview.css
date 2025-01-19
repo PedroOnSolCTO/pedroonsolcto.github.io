@@ -1,0 +1,212 @@
+.preview-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  position: relative;
+  overflow: auto;
+}
+
+.meme-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 400px;
+  min-height: 300px;
+  aspect-ratio: 16/9;
+}
+
+#meme-canvas,
+#preview-canvas,
+#drawCanvas,
+.stickers-container,
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+#preview-canvas {
+  z-index: 0;
+}
+
+#meme-canvas {
+  z-index: 1;
+  object-fit: contain;
+}
+
+#drawCanvas {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.stickers-container {
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+}
+
+.text-overlay {
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+#backgroundGif {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  z-index: 0;
+}
+
+.sticker {
+  pointer-events: auto;
+}
+
+.overlay-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 100%;
+  text-align: center;
+  padding: 0 1em;
+  box-sizing: border-box;
+  font-family: 'Impact', sans-serif;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow:
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  font-weight: 700;
+}
+
+.top-text {
+  top: 1em;
+  font-size: 3em;
+}
+
+.bottom-text {
+  bottom: 10px;
+  font-size: 3em;
+}
+
+.sticker {
+  position: absolute;
+  font-size: 3em;
+  cursor: move;
+  user-select: none;
+  transform-origin: center center;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  width: fit-content;
+  height: fit-content;
+  box-sizing: content-box;
+  border-radius: 4px;
+  transition: outline-color 0.2s ease;
+}
+
+.sticker.selected {
+  outline: 1.5px solid rgba(255, 112, 67, 0.6);
+  outline-offset: 2px;
+}
+
+.sticker.selected .handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 1.5px solid #ff7043;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff7043;
+  font-size: 12px;
+  font-weight: bold;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.sticker.selected .handle:hover {
+  transform: scale(1.1);
+  background: #ff7043;
+  color: #fff;
+}
+
+.sticker.selected .rotate-handle {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sticker.selected .rotate-handle:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.sticker.selected .scale-handle {
+  cursor: nwse-resize;
+}
+
+.sticker.selected .scale-handle.tl {
+  top: -24px;
+  left: -24px;
+}
+
+.sticker.selected .scale-handle.tr {
+  top: -24px;
+  right: -24px;
+}
+
+.sticker.selected .scale-handle.bl {
+  bottom: -24px;
+  left: -24px;
+}
+
+.sticker.selected .scale-handle.br {
+  bottom: -24px;
+  right: -24px;
+}
+
+@media screen and (max-width: 600px) {
+  .preview-area {
+    height: calc(50vh - 19px);
+    width: calc(50vh * (16 / 9));
+    flex-shrink: 0;
+    padding: 0.5em;
+  }
+
+  .meme-container {
+    max-height: calc(50vh - 39px);
+  }
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+.drawing-mode #drawCanvas {
+  z-index: 4;
+  pointer-events: auto;
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23ff7043' stroke='white' stroke-width='2'%3E%3Cpath d='M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z'/%3E%3C/svg%3E")
+      0 24,
+    auto !important;
+}
