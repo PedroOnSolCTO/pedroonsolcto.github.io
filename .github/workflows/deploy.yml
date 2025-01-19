@@ -25,6 +25,9 @@ jobs:
             homepage/package-lock.json
             memes/package-lock.json
 
+      - name: Create docs directory
+        run: mkdir -p docs
+
       - name: Install homepage dependencies
         working-directory: homepage
         run: npm ci
