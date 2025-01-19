@@ -24,6 +24,7 @@ jobs:
           cache-dependency-path: |
             homepage/package-lock.json
             memes/package-lock.json
+            rebrand/package-lock.json
 
       - name: Create docs directory
         run: mkdir -p docs
@@ -42,6 +43,14 @@ jobs:
 
       - name: Build memes
         working-directory: memes
+        run: npm run build
+
+      - name: Install rebrand dependencies
+        working-directory: rebrand
+        run: npm ci
+
+      - name: Build rebrand
+        working-directory: rebrand
         run: npm run build
 
       - name: Deploy to GitHub Pages 🚀
