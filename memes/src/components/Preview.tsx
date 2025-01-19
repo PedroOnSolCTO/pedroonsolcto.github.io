@@ -1,16 +1,15 @@
 import { FC, useEffect, useRef } from 'react';
 import { useStickersContext } from '../contexts/StickersContext';
 import { useTemplate } from '../contexts/TemplateContext';
+import { useTextContext } from '../contexts/TextContext';
 import { useDrawing } from '../hooks/useDrawing';
 import { useGifHandling } from '../hooks/useGifHandling';
-import { useTextOverlay } from '../hooks/useTextOverlay';
 import { DrawingIndicator } from './DrawingIndicator';
 import './Preview.css';
 import { Sticker } from './Sticker';
+import { Text } from './Text';
 
 export const Preview: FC = () => {
-  const { drawCanvasRef, drawingState, draw, startDrawing, stopDrawing } = useDrawing();
-  const { textSettings, drawText } = useTextOverlay();
   const { selectedTemplateImage } = useTemplate();
   const {
     stickers,
@@ -22,21 +21,15 @@ export const Preview: FC = () => {
     selectSticker,
   } = useStickersContext();
 
+  const { texts, selectedText, updateText, removeText, selectText } = useTextContext();
+
   const memeCanvasRef = useRef<HTMLCanvasElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+  const drawCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const {
-    gifInfo,
-    currentFrame,
-    disabledFrames,
-    currentFilter,
-    handleGifLoad,
-    toggleFrame,
-    toggleAllFrames,
-    setCurrentFilter,
-    downloadAnimatedGif,
-  } = useGifHandling(previewCanvasRef, memeCanvasRef, drawCanvasRef);
+  const { startDrawing, draw, stopDrawing, drawingState } = useDrawing(drawCanvasRef);
+  const { gifInfo, currentFrame, disabledFrames, toggleFrame, toggleAllFrames } = useGifHandling();
 
   // Load template image when it changes
   useEffect(() => {
@@ -121,20 +114,6 @@ export const Preview: FC = () => {
     };
   }, [selectedTemplateImage]);
 
-  // Effect to draw text whenever text settings change
-  useEffect(() => {
-    const ctx = memeCanvasRef.current?.getContext('2d');
-    if (!ctx) return;
-
-    // Draw top and bottom text
-    if (textSettings.topText) {
-      drawText(textSettings.topText, 0.1, textSettings.fontSize, ctx);
-    }
-    if (textSettings.bottomText) {
-      drawText(textSettings.bottomText, 0.9, textSettings.fontSize, ctx);
-    }
-  }, [textSettings, drawText]);
-
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
@@ -153,7 +132,13 @@ export const Preview: FC = () => {
   };
 
   return (
-    <div className="preview-area" onClick={() => selectSticker(null)}>
+    <div
+      className="preview-area"
+      onClick={() => {
+        selectSticker(null);
+        selectText(null);
+      }}
+    >
       <div ref={containerRef} className="meme-container">
         <canvas ref={previewCanvasRef} id="preview-canvas" />
         <canvas ref={memeCanvasRef} id="meme-canvas" />
@@ -182,6 +167,20 @@ export const Preview: FC = () => {
               onScale={updateStickerScale}
               onRotate={updateStickerRotation}
               onDelete={removeSticker}
+            />
+          ))}
+        </div>
+
+        <div className="text-container" onClick={e => e.stopPropagation()}>
+          {texts.map(text => (
+            <Text
+              key={text.id}
+              {...text}
+              isSelected={selectedText === text.id}
+              onSelect={selectText}
+              onMove={(id, x, y) => updateText(id, { x, y })}
+              onDelete={removeText}
+              onChange={(id, newText) => updateText(id, { text: newText })}
             />
           ))}
         </div>

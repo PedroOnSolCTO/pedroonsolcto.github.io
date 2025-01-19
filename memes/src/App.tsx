@@ -6,24 +6,27 @@ import { Preview } from './components/Preview';
 import { Templates } from './components/Templates';
 import { StickersProvider } from './contexts/StickersContext';
 import { TemplateProvider } from './contexts/TemplateContext';
+import { TextProvider } from './contexts/TextContext';
 
 export const App: FC = () => {
   return (
     <TemplateProvider>
       <StickersProvider>
-        <div className="app">
-          <Header />
-          <div className="wrapper">
-            <div className="main-content">
-              <div className="editor-section">
-                <Preview />
-              </div>
-              <div className="controls-section">
-                <Controls />
+        <TextProvider>
+          <div className="app">
+            <Header />
+            <div className="wrapper">
+              <div className="main-content">
+                <div className="editor-section">
+                  <Preview />
+                </div>
+                <div className="controls-section">
+                  <Controls />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </TextProvider>
       </StickersProvider>
     </TemplateProvider>
   );
