@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$PEDRO - Monkey Puppet</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      .glow {
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+      }
+
+      @-webkit-keyframes glow {
+        from {
+          box-shadow:
+            0 0 5px rgba(255, 255, 255, 0.1),
+            0 0 10px rgba(255, 255, 255, 0.1),
+            0 0 15px rgba(255, 255, 0, 0.1),
+            0 0 20px rgba(255, 255, 0, 0.1),
+            0 0 25px rgba(255, 255, 0, 0.1),
+            0 0 30px rgba(255, 255, 0, 0.1),
+            0 0 35px rgba(255, 255, 0, 0.1);
+        }
+
+        to {
+          box-shadow:
+            0 0 10px rgba(255, 255, 255, 0.1),
+            0 0 15px rgba(239, 161, 27, 0.1),
+            0 0 20px rgba(239, 161, 27, 0.1),
+            0 0 25px rgba(239, 161, 27, 0.1),
+            0 0 30px rgba(239, 161, 27, 0.1),
+            0 0 35px rgba(239, 161, 27, 0.1),
+            0 0 40px rgba(239, 161, 27, 0.1);
+        }
+      }
+
+      @keyframes glow {
+        from {
+          box-shadow:
+            0 0 5px rgba(255, 255, 255, 0.1),
+            0 0 10px rgba(255, 255, 255, 0.1),
+            0 0 15px rgba(255, 255, 0, 0.1),
+            0 0 20px rgba(255, 255, 0, 0.1),
+            0 0 25px rgba(255, 255, 0, 0.1),
+            0 0 30px rgba(255, 255, 0, 0.1),
+            0 0 35px rgba(255, 255, 0, 0.1);
+        }
+
+        to {
+          box-shadow:
+            0 0 10px rgba(255, 255, 255, 0.1),
+            0 0 15px rgba(239, 161, 27, 0.1),
+            0 0 20px rgba(239, 161, 27, 0.1),
+            0 0 25px rgba(239, 161, 27, 0.1),
+            0 0 30px rgba(239, 161, 27, 0.1),
+            0 0 35px rgba(239, 161, 27, 0.1),
+            0 0 40px rgba(239, 161, 27, 0.1);
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    class="min-h-screen bg-left-[0px] md:bg-center md:bg-right-[0px] bg-cover bg-no-repeat p-6 flex flex-col w-full"
+    style="
+      background-image: url('assets/background_image.jpg');
+      font-family: 'Bricolage Grotesque', cursive;
+    "
+  >
+    <!-- Loading div -->
+    <div
+      id="loading"
+      class="fixed inset-0 w-full h-full z-10 flex flex-col justify-center items-center max-md:bg-[url('assets/small_background_image.jpg')] bg-cover bg-center max-md:bg-opacity bg-amber-300"
+    >
+      <h1 class="text-4xl font-bold text-center max-md:text-white">
+        <span class="block text-7xl">$PEDRO</span> is the ticker
+      </h1>
+    </div>
+
+    <header
+      class="relative w-full max-w-screen-xl mx-auto justify-between flex items-center animate__animated to_animate"
+    >
+      <a href="#"
+        ><img src="assets/monkey_puppet_logo.png" class="w-24" alt="Monkey Puppet Logo"
+      /></a>
+
+      <nav class="space-x-4 block text-sm">
+        <button class="sm:hidden bg-white border-b-2 border-black p-2" id="burger-menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
+
+        <div
+          id="nav-links"
+          class="hidden absolute right-0 bg-white/10 backdrop-blur-md p-4 mt-4 sm:block flex flex-col sm:flex-row gap-6 sm:relative sm:bg-transparent sm:mt-auto sm:p-0 sm:space-x-4"
+        >
+          <a
+            href="https://dexscreener.com/solana/4treqqa63attkfn4ncgocanivjfdcjeajmqsnax7caqm"
+            target="_blank"
+            class="transition hover:-translate-y-1 focus:-translate-y-1 bg-yellow-300 border-green-900 border-b-4 border-orange-950 px-4 py-2 uppercase font-bold"
+            >Get $PEDRO</a
+          >
+          <a href="/memes.html" target="_blank"
+            ><button
+              class="transition hover:-translate-y-1 focus:-translate-y-1 bg-white border-b-4 border-orange-950 border-black px-4 py-2 uppercase font-bold relative"
+            >
+              Meme generator
+              <div
+                class="absolute text-xs -top-4 -right-4 rotate-6 bg-green-500 px-2 py-0.5 rounded-full"
+              >
+                NEW!
+              </div>
+            </button>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main
+      class="w-full max-w-screen-xl flex-1 mx-auto flex flex-col gap-6 justify-center max-md:items-center py-10 md:py-24"
+    >
+      <h2 class="text-pretty font-bold text-2xl lg:text-4xl">
+        The Most Awkwardly Amazing Token on Solana
+      </h2>
+
+      <div class="flex flex-col md:flex-row gap-6">
+        <img
+          src="assets/pedro-monkey-puppet.gif"
+          alt="Monkey Puppet"
+          width="360"
+          class="glow object-cover max-md:w-full rounded-2xl shadow-lg"
+        />
+        <div class="flex flex-col gap-4 justify-between">
+          <div class="space-y-4">
+            <img
+              src="assets/ticker_logo.png"
+              alt="$pedro ticker image"
+              class="h-24 object-contain animate__animated animate__tada animate__delay-3s"
+            />
+          </div>
+
+          <div
+            class="animate__animated to_animate bg-gradient-to-t from-yellow-300/60 to-white/40 shadow-lg p-4 shadow-lg"
+          >
+            <div class="md:text-xl">Side Eye Technology</div>
+            <p class="max-lg:text-sm">Powered by the most awkward moments in blockchain history</p>
+          </div>
+          <div
+            class="animate__animated to_animate bg-gradient-to-t from-yellow-300/60 to-white/40 shadow-lg p-4 shadow-lg"
+          >
+            <div class="md:text-xl">Meme Power</div>
+            <p class="max-lg:text-sm">Every transaction comes with a free dose of social anxiety</p>
+          </div>
+          <div
+            class="animate__animated to_animate bg-gradient-to-t from-yellow-300/60 to-white/40 shadow-lg p-4 shadow-lg"
+          >
+            <div class="md:text-xl">Community Driven</div>
+            <p class="max-lg:text-sm">Join the most awkwardly awesome community in crypto</p>
+          </div>
+
+          <div class="flex gap-4 flex-col lg:flex-row">
+            <a
+              href="https://dexscreener.com/solana/4treqqa63attkfn4ncgocanivjfdcjeajmqsnax7caqm"
+              target="_blank"
+              class="transition hover:-translate-y-1 focus:-translate-y-1 w-full bg-yellow-300 border-green-900 border-b-4 border-orange-950 px-4 py-2 uppercase font-bold"
+              >Buy $PEDRO</a
+            >
+            <a
+              href="https://t.me/PedroOnSolCTO"
+              target="_blank"
+              class="transition hover:-translate-y-1 focus:-translate-y-1 w-full bg-white border-b-4 border-orange-950 px-4 py-2 uppercase font-bold"
+              >Join Community</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="animate__animated to_animate w-full max-w-screen-xl mx-auto flex gap-4 flex-wrap justify-between"
+    >
+      <button
+        id="copy_address"
+        class="max-md:w-full flex items-center gap-2 bg-white/40 backdrop-blur-md px-4 py-2 shadow-lg"
+      >
+        <div id="defaultCopySvg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"
+            />
+          </svg>
+        </div>
+        <div class="text-green-700 hidden" id="copiedSvg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </div>
+        <span class="sm:hidden">8HWCntWrLE4...QB5jHyqLpump</span>
+        <span class="hidden sm:block">8HWCntWrLE4GJ6iK5cwvbhvuQSoRCiu3QB5jHyqLpump</span>
+      </button>
+
+      <div
+        class="max-md:w-full flex justify-between items-center gap-4 bg-white/40 backdrop-blur-md px-4 py-2 shadow-lg"
+      >
+        <a href="https://x.com/pedrooonsol" target="_blank"
+          ><img src="./assets/socials/x.png" width="20" alt="X (formerly Twitter) link"
+        /></a>
+        <a href="https://t.me/PedroOnSolCTO" target="_blank"
+          ><img src="./assets/socials/tg.png" width="28" alt="Telegram link"
+        /></a>
+        <a href="https://www.tiktok.com/@pedrothepedr0" target="_blank"
+          ><img src="./assets/socials/tok.png" width="28" alt="TikTok link"
+        /></a>
+        <a
+          href="https://dexscreener.com/solana/4treqqa63attkfn4ncgocanivjfdcjeajmqsnax7caqm"
+          target="_blank"
+          ><img src="./assets/socials/dex.png" width="28" alt="Dexscreener link"
+        /></a>
+        <a
+          href="https://www.dextools.io/app/en/solana/pair-explorer/4TREqqA63AtTKfn4NcgoCAniVjfDCJEAJmqsNaX7cAqm?t=1733687182881"
+          target="_blank"
+          ><img src="./assets/socials/dext.png" width="20" alt="Dextools link"
+        /></a>
+        <a
+          href="https://coinmarketcap.com/dexscan/solana/4TREqqA63AtTKfn4NcgoCAniVjfDCJEAJmqsNaX7cAqm/"
+          target="_blank"
+          ><img src="./assets/socials/cmc.png" width="24" alt="Coinmarketcap link"
+        /></a>
+        <a href="https://monkeypuppet.xyz/#" target="_blank"
+          ><img src="./assets/socials/gecko.png" width="24" alt="Coingecko link"
+        /></a>
+      </div>
+    </footer>
+  </body>
+
+  <!-- Loading state -->
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadingDiv = document.getElementById('loading');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        loadingDiv.classList.add('animate__animated', 'animate__slideOutDown');
+        const elementsToAnimate = document.querySelectorAll('.to_animate');
+
+        elementsToAnimate.forEach(element => {
+          element.classList.add('animate__animated', 'animate__slideInDown');
+        });
+
+        loadingDiv.addEventListener('animationend', () => {
+          loadingDiv.style.display = 'none';
+          document.body.style.overflow = '';
+        });
+      }, 2000);
+    });
+  </script>
+
+  <script defer>
+    const burgerMenu = document.getElementById('burger-menu');
+    const nav = document.querySelector('#nav-links');
+
+    burgerMenu.addEventListener('click', () => {
+      nav.classList.toggle('hidden');
+    });
+
+    const address = '8HWCntWrLE4GJ6iK5cwvbhvuQSoRCiu3QB5jHyqLpump';
+    const copyAddress = document.getElementById('copy_address');
+    const defaultCopySvg = document.getElementById('defaultCopySvg');
+    const copiedSvg = document.getElementById('copiedSvg');
+    let intervalId;
+
+    copyAddress.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(address);
+      defaultCopySvg.classList.add('hidden');
+      copiedSvg.classList.remove('hidden');
+
+      clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        copiedSvg.classList.add('hidden');
+        defaultCopySvg.classList.remove('hidden');
+      }, 2000);
+    });
+  </script>
+</html>
+<!-- Built for Monkey Puppet [$PEDRO] community by aspire9252 on Discord -->
