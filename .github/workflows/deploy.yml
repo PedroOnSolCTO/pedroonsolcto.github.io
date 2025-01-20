@@ -29,7 +29,7 @@ jobs:
       - name: Create docs directory
         run: |
           rm -rf docs
-          mkdir -p docs
+          mkdir -p docs/assets
 
       - name: Install homepage dependencies
         working-directory: homepage
@@ -42,7 +42,8 @@ jobs:
       - name: Copy homepage files
         run: |
           ls -la homepage/dist/
-          cp -rv homepage/dist/* docs/
+          cp -rv homepage/dist/index.html docs/
+          cp -rv homepage/dist/assets/* docs/assets/
           ls -la docs/
 
       - name: Install memes dependencies
@@ -56,7 +57,8 @@ jobs:
       - name: Copy memes files
         run: |
           ls -la memes/dist/
-          cp -rv memes/dist/* docs/
+          cp -rv memes/dist/memes.html docs/
+          cp -rv memes/dist/assets/* docs/assets/
           ls -la docs/
 
       - name: Install rebrand dependencies
@@ -70,7 +72,11 @@ jobs:
       - name: Copy rebrand files
         run: |
           ls -la rebrand/dist/
-          cp -rv rebrand/dist/* docs/
+          cp -rv rebrand/dist/rebrand.html docs/
+          cp -rv rebrand/dist/assets/* docs/assets/
+          cp -rv rebrand/dist/images docs/
+          cp -rv rebrand/dist/news docs/
+          cp -rv rebrand/dist/pedro_billboard.MP4 docs/
           ls -la docs/
 
       - name: Deploy to GitHub Pages
