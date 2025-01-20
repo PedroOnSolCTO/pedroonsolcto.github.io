@@ -29,22 +29,7 @@ jobs:
       - name: Create docs directory
         run: |
           rm -rf docs
-          mkdir -p docs/assets
-
-      - name: Install homepage dependencies
-        working-directory: homepage
-        run: npm ci
-
-      - name: Build homepage
-        working-directory: homepage
-        run: npm run build
-
-      - name: Copy homepage files
-        run: |
-          ls -la homepage/dist/
-          cp -rv homepage/dist/index.html docs/
-          cp -rv homepage/dist/assets/* docs/assets/
-          ls -la docs/
+          mkdir -p docs
 
       - name: Install memes dependencies
         working-directory: memes
@@ -57,9 +42,7 @@ jobs:
       - name: Copy memes files
         run: |
           ls -la memes/dist/
-          cp -rv memes/dist/memes.html docs/
-          cp -rv memes/dist/assets/* docs/assets/
-          ls -la docs/
+          cp -rv memes/dist/* docs/
 
       - name: Install rebrand dependencies
         working-directory: rebrand
@@ -72,12 +55,20 @@ jobs:
       - name: Copy rebrand files
         run: |
           ls -la rebrand/dist/
-          cp -rv rebrand/dist/rebrand.html docs/
-          cp -rv rebrand/dist/assets/* docs/assets/
-          cp -rv rebrand/dist/images docs/
-          cp -rv rebrand/dist/news docs/
-          cp -rv rebrand/dist/pedro_billboard.MP4 docs/
-          ls -la docs/
+          cp -rv rebrand/dist/* docs/
+
+      - name: Install homepage dependencies
+        working-directory: homepage
+        run: npm ci
+
+      - name: Build homepage
+        working-directory: homepage
+        run: npm run build
+
+      - name: Copy homepage files
+        run: |
+          ls -la homepage/dist/
+          cp -rv homepage/dist/* docs/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
