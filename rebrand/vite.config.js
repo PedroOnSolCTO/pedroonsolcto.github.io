@@ -8,10 +8,12 @@ export default defineConfig({
     outDir: "../docs",
     emptyOutDir: false,
     rollupOptions: {
+      input: "rebrand.html",
       output: {
         dir: "../docs",
         entryFileNames: "assets/rebrand.[hash].js",
         assetFileNames: "assets/rebrand.[hash].[ext]",
+        chunkFileNames: "assets/rebrand.[hash].js",
       },
     },
   },
