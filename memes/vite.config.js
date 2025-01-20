@@ -7,10 +7,11 @@ export default defineConfig({
     outDir: '../docs',
     emptyOutDir: false,
     rollupOptions: {
+      input: 'memes.html',
       output: {
-        dir: '../docs',
         entryFileNames: 'assets/memes.[hash].js',
         assetFileNames: 'assets/memes.[hash].[ext]',
+        chunkFileNames: 'assets/memes.[hash].js',
       },
     },
   },
