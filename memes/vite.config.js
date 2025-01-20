@@ -4,8 +4,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: '../docs',
-    emptyOutDir: false,
+    outDir: 'dist',
+    emptyOutDir: true,
     rollupOptions: {
       input: 'memes.html',
       output: {

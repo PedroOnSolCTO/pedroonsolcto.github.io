@@ -5,12 +5,11 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../docs",
-    emptyOutDir: false,
+    outDir: "dist",
+    emptyOutDir: true,
     rollupOptions: {
       input: "rebrand.html",
       output: {
-        dir: "../docs",
         entryFileNames: "assets/rebrand.[hash].js",
         assetFileNames: "assets/rebrand.[hash].[ext]",
         chunkFileNames: "assets/rebrand.[hash].js",

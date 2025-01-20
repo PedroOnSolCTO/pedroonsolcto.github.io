@@ -37,6 +37,9 @@ jobs:
         working-directory: homepage
         run: npm run build
 
+      - name: Copy homepage files
+        run: cp -r homepage/dist/* docs/
+
       - name: Install memes dependencies
         working-directory: memes
         run: npm ci
@@ -45,6 +48,9 @@ jobs:
         working-directory: memes
         run: npm run build
 
+      - name: Copy memes files
+        run: cp -r memes/dist/* docs/
+
       - name: Install rebrand dependencies
         working-directory: rebrand
         run: npm ci
@@ -52,6 +58,9 @@ jobs:
       - name: Build rebrand
         working-directory: rebrand
         run: npm run build
+
+      - name: Copy rebrand files
+        run: cp -r rebrand/dist/* docs/
 
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
